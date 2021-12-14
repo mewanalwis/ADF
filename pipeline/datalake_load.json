@@ -1,0 +1,47 @@
+{
+	"name": "datalake_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_load_datalake",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"yellowstaging": {
+								"staging_year": "2021",
+								"staging_month": "01"
+							},
+							"greenstaging": {
+								"staging_year": "2021",
+								"staging_month": "01"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "Transformation"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-12-09T10:39:58Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

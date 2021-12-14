@@ -1,0 +1,117 @@
+{
+	"name": "ds_green_raw_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "nytaxiurl",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"source_year": {
+				"type": "String",
+				"defaultValue": "2021"
+			},
+			"source_month": {
+				"type": "String",
+				"defaultValue": "01"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@concat('green_tripdata_',dataset().source_year,'-',dataset().source_month,'.csv')",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "VendorID",
+				"type": "String"
+			},
+			{
+				"name": "lpep_pickup_datetime",
+				"type": "String"
+			},
+			{
+				"name": "lpep_dropoff_datetime",
+				"type": "String"
+			},
+			{
+				"name": "store_and_fwd_flag",
+				"type": "String"
+			},
+			{
+				"name": "RatecodeID",
+				"type": "String"
+			},
+			{
+				"name": "PULocationID",
+				"type": "String"
+			},
+			{
+				"name": "DOLocationID",
+				"type": "String"
+			},
+			{
+				"name": "passenger_count",
+				"type": "String"
+			},
+			{
+				"name": "trip_distance",
+				"type": "String"
+			},
+			{
+				"name": "fare_amount",
+				"type": "String"
+			},
+			{
+				"name": "extra",
+				"type": "String"
+			},
+			{
+				"name": "mta_tax",
+				"type": "String"
+			},
+			{
+				"name": "tip_amount",
+				"type": "String"
+			},
+			{
+				"name": "tolls_amount",
+				"type": "String"
+			},
+			{
+				"name": "ehail_fee",
+				"type": "String"
+			},
+			{
+				"name": "improvement_surcharge",
+				"type": "String"
+			},
+			{
+				"name": "total_amount",
+				"type": "String"
+			},
+			{
+				"name": "payment_type",
+				"type": "String"
+			},
+			{
+				"name": "trip_type",
+				"type": "String"
+			},
+			{
+				"name": "congestion_surcharge",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

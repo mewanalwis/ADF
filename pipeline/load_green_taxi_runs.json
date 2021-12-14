@@ -1,0 +1,100 @@
+{
+	"name": "load_green_taxi_runs",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy green taxi file",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_green_raw_data",
+						"type": "DatasetReference",
+						"parameters": {
+							"source_year": {
+								"value": "@pipeline().parameters.Year",
+								"type": "Expression"
+							},
+							"source_month": {
+								"value": "@pipeline().parameters.Month",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_green_staging",
+						"type": "DatasetReference",
+						"parameters": {
+							"staging_year": {
+								"value": "@pipeline().parameters.Year",
+								"type": "Expression"
+							},
+							"staging_month": {
+								"value": "@pipeline().parameters.Month",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"Year": {
+				"type": "string",
+				"defaultValue": "2021"
+			},
+			"Month": {
+				"type": "string",
+				"defaultValue": "02"
+			}
+		},
+		"folder": {
+			"name": "Ingestion"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-12-03T05:23:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

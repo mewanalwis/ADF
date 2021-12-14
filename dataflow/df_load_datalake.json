@@ -1,0 +1,48 @@
+{
+	"name": "df_load_datalake",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_yellow_staging",
+						"type": "DatasetReference"
+					},
+					"name": "yellowstaging"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_green_staging",
+						"type": "DatasetReference"
+					},
+					"name": "greenstaging"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_taxi",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "yellowtaxi"
+				},
+				{
+					"name": "greentaxi"
+				},
+				{
+					"name": "taxitripdata"
+				},
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tVendorID as string,\n\t\ttpep_pickup_datetime as timestamp,\n\t\ttpep_dropoff_datetime as timestamp,\n\t\tpassenger_count as short,\n\t\ttrip_distance as double,\n\t\tRatecodeID as short,\n\t\tstore_and_fwd_flag as string,\n\t\tPULocationID as short,\n\t\tDOLocationID as short,\n\t\tpayment_type as short,\n\t\tfare_amount as double,\n\t\textra as double,\n\t\tmta_tax as double,\n\t\ttip_amount as double,\n\t\ttolls_amount as double,\n\t\timprovement_surcharge as double,\n\t\ttotal_amount as double,\n\t\tcongestion_surcharge as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\twildcardPaths:['tripdata/yellow/*']) ~> yellowstaging\nsource(output(\n\t\tVendorID as string,\n\t\tlpep_pickup_datetime as timestamp,\n\t\tlpep_dropoff_datetime as timestamp,\n\t\tstore_and_fwd_flag as string,\n\t\tRatecodeID as short,\n\t\tPULocationID as short,\n\t\tDOLocationID as short,\n\t\tpassenger_count as short,\n\t\ttrip_distance as double,\n\t\tfare_amount as double,\n\t\textra as double,\n\t\tmta_tax as double,\n\t\ttip_amount as double,\n\t\ttolls_amount as double,\n\t\tehail_fee as string,\n\t\timprovement_surcharge as double,\n\t\ttotal_amount as double,\n\t\tpayment_type as short,\n\t\ttrip_type as short,\n\t\tcongestion_surcharge as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false,\n\twildcardPaths:['tripdata/green/*']) ~> greenstaging\nyellowstaging derive(taxitype = 'yellow') ~> yellowtaxi\ngreenstaging derive(taxitype = 'green') ~> greentaxi\nyellowtaxi, greentaxi union(byName: true)~> taxitripdata\ntaxitripdata derive(trip_year = year(tpep_pickup_datetime),\n\t\ttrip_month = month(tpep_pickup_datetime),\n\t\tconn_status = case(store_and_fwd_flag=='Y','bad','good'),\n\t\tvendor = iif(VendorID=='1', 'CMT', 'VF')) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\ttruncate: true,\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('key',\n\t\t0,\n\t\ttrip_year,\n\t\ttrip_month\n\t)) ~> sink1"
+		}
+	}
+}

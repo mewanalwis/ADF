@@ -1,0 +1,318 @@
+{
+	"name": "load_yellow_taxi_runs",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy yellow taxi file",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "VendorID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "VendorID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tpep_pickup_datetime",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tpep_pickup_datetime",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tpep_dropoff_datetime",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tpep_dropoff_datetime",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "passenger_count",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "passenger_count",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "trip_distance",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "trip_distance",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "RatecodeID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RatecodeID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "store_and_fwd_flag",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "store_and_fwd_flag",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PULocationID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PULocationID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DOLocationID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DOLocationID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "payment_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "payment_type",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "fare_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fare_amount",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "extra",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "extra",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "mta_tax",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "mta_tax",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tip_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tip_amount",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tolls_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "tolls_amount",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "improvement_surcharge",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "improvement_surcharge",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "total_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "total_amount",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "congestion_surcharge",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "congestion_surcharge",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_yellow_raw_data",
+						"type": "DatasetReference",
+						"parameters": {
+							"source_year": {
+								"value": "@pipeline().parameters.Year",
+								"type": "Expression"
+							},
+							"source_month": {
+								"value": "@pipeline().parameters.Month",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_yellow_staging",
+						"type": "DatasetReference",
+						"parameters": {
+							"staging_year": {
+								"value": "@pipeline().parameters.Year",
+								"type": "Expression"
+							},
+							"staging_month": {
+								"value": "@pipeline().parameters.Month",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"Year": {
+				"type": "string",
+				"defaultValue": "2021"
+			},
+			"Month": {
+				"type": "string",
+				"defaultValue": "02"
+			}
+		},
+		"folder": {
+			"name": "Ingestion"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-12-01T04:23:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
