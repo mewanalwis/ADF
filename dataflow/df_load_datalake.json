@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ds_taxi",
+						"referenceName": "ds_taxi_datalake",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
