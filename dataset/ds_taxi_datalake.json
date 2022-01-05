@@ -1,0 +1,20 @@
+{
+	"name": "ds_taxi_datalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "taxi_dl",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "tripdata"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

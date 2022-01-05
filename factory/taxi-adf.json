@@ -1,0 +1,9 @@
+{
+	"name": "taxi-adf",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "44d6cd12-df72-41e4-8e05-8be3108df2dd",
+		"tenantId": "022f47ed-aaed-44a1-ae59-0240d7936610"
+	}
+}
